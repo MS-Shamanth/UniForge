@@ -20,11 +20,19 @@ export function useInView({ threshold = 0.16, rootMargin = '0px 0px -8% 0px' } =
       setInView(true)
       return
     }
+
+    let done = false
+    const reveal = () => {
+      if (done) return
+      done = true
+      setInView(true)
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            setInView(true)
+            reveal()
             io.unobserve(e.target)
           }
         })
@@ -32,7 +40,43 @@ export function useInView({ threshold = 0.16, rootMargin = '0px 0px -8% 0px' } =
       { threshold, rootMargin }
     )
     io.observe(node)
-    return () => io.disconnect()
+
+    /**
+     * Safety net.
+     *
+     * An observer callback can be missed: coalesced during a fast scroll, or never fired
+     * because a zero-height element cannot satisfy a threshold, or excluded by the
+     * negative bottom rootMargin when it sits in the last slice of a fully scrolled page.
+     * The failure mode is content left permanently at opacity 0, which is far worse than
+     * an animation that does not play. So on a scroll-idle tick we check the geometry
+     * ourselves and reveal anything that has entered the viewport.
+     */
+    const check = () => {
+      if (done) return
+      const r = node.getBoundingClientRect()
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        reveal()
+        io.unobserve(node)
+      }
+    }
+
+    let timer = 0
+    const onScroll = () => {
+      clearTimeout(timer)
+      timer = setTimeout(check, 140)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    const initial = setTimeout(check, 900)
+
+    return () => {
+      io.disconnect()
+      clearTimeout(timer)
+      clearTimeout(initial)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [threshold, rootMargin])
 
   return [ref, inView]

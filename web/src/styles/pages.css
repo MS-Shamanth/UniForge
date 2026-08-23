@@ -1773,3 +1773,222 @@
   color: var(--faint);
   letter-spacing: 0.01em;
 }
+
+/* ── Live demo band ─────────────────────────────────────────────────────── */
+.demo {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+
+.demo__glow {
+  position: absolute;
+  top: -34%;
+  left: 42%;
+  width: 900px;
+  height: 900px;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(232, 75, 216, 0.13),
+    transparent 68%
+  );
+}
+
+.demo__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  gap: clamp(38px, 5vw, 76px);
+  align-items: center;
+}
+
+.demo__head {
+  margin: 0 0 24px;
+  font-size: clamp(2.1rem, 4.8vw, 3.7rem);
+  line-height: 1.05;
+}
+
+.demo__lede {
+  max-width: 50ch;
+}
+
+.demo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+/* the primary target: deliberately larger than any other button on the page */
+.demo__cta {
+  position: relative;
+  padding: 19px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(232, 75, 216, 0.4),
+    0 16px 44px rgba(232, 75, 216, 0.24);
+  overflow: hidden;
+}
+
+.demo__cta:hover {
+  box-shadow: 0 0 0 1px rgba(244, 92, 230, 0.55),
+    0 20px 54px rgba(232, 75, 216, 0.32);
+}
+
+.demo__ctaPulse {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 80%
+  );
+  transform: translateX(-110%);
+  animation: shine 4.8s var(--ease) infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-110%);
+  }
+  38%,
+  100% {
+    transform: translateX(110%);
+  }
+}
+
+.demo__ctaAlt {
+  padding: 19px 26px;
+  font-size: 15px;
+}
+
+.demo__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.demo__panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.demopanel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: clamp(20px, 2.4vw, 26px);
+  background: var(--bg);
+  transition:
+    background 0.26s var(--ease),
+    box-shadow 0.26s var(--ease);
+}
+
+.demopanel:hover {
+  background: var(--panel-purple);
+  box-shadow: inset 0 0 0 1px var(--magenta-line);
+}
+
+.demopanel__icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--hair-strong);
+  border-radius: 4px;
+  color: var(--muted);
+  transition:
+    color 0.26s var(--ease),
+    border-color 0.26s var(--ease);
+}
+
+.demopanel:hover .demopanel__icon {
+  color: var(--magenta);
+  border-color: var(--magenta-line);
+}
+
+.demopanel__id {
+  position: absolute;
+  top: clamp(20px, 2.4vw, 26px);
+  right: clamp(20px, 2.4vw, 26px);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+
+.demopanel__title {
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  margin: 4px 0 0;
+}
+
+.demopanel__body {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.demopanel__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  opacity: 0;
+  transform: translateY(3px);
+  transition:
+    opacity 0.26s var(--ease),
+    transform 0.26s var(--ease);
+}
+
+.demopanel:hover .demopanel__go,
+.demopanel:focus-visible .demopanel__go {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 1024px) {
+  .demo__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+}
+
+@media (max-width: 560px) {
+  .demo__panels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .demo__cta,
+  .demo__ctaAlt {
+    width: 100%;
+    justify-content: center;
+    padding-inline: 20px;
+  }
+
+  .demopanel__go {
+    opacity: 1;
+    transform: none;
+  }
+}

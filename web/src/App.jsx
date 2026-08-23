@@ -11,6 +11,7 @@ import Evidence from './components/Evidence'
 import TrustBoundary from './components/TrustBoundary'
 import Contradiction from './components/Contradiction'
 import HumanLoop from './components/HumanLoop'
+import LiveDemo from './components/LiveDemo'
 import Results from './components/Results'
 import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
@@ -68,7 +69,8 @@ function Landing() {
         <hr className="rule rule--shell" />
         <Architecture />
         <LearningEngine />
-        <hr className="rule rule--shell" />
+        {/* The interruption in the middle: the page is the front door, not the product. */}
+        <LiveDemo />
         <Enrichment />
         <Evidence />
         <TrustBoundary />

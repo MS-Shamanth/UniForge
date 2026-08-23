@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Icon, { Wordmark } from '../components/ui/Icon'
+import { StatusBadge } from '../components/ui'
 import { api, num, pct } from './api'
 import '../styles/console.css'
 
@@ -18,18 +19,38 @@ export default function Console() {
   const [metrics, setMetrics] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [progress, setProgress] = useState(null)
 
+  /**
+   * The server warms a run at startup, so this usually returns instantly. When it does
+   * not — a cold boot, or a freshly uploaded catalogue — we poll /api/status instead of
+   * sitting on a blocking /api/metrics request, so the page can say what it is waiting
+   * for rather than looking hung.
+   */
   const load = useCallback(async () => {
     setLoading(true)
     setError(null)
+    setProgress(null)
     try {
       const h = await api.health()
       setHealth(h)
+
+      if (!h.run?.ready) {
+        for (let i = 0; i < 240; i += 1) {
+          const st = await api.status()
+          setProgress(st)
+          if (st.error) throw new Error(st.error)
+          if (st.ready) break
+          await new Promise((r) => setTimeout(r, 700))
+        }
+      }
+
       setMetrics(await api.metrics())
     } catch (e) {
       setError(e.message)
     } finally {
       setLoading(false)
+      setProgress(null)
     }
   }, [])
 
@@ -78,7 +99,7 @@ export default function Console() {
       </header>
 
       <main className="cons__main">
-        {loading && <Loading />}
+        {loading && <Loading progress={progress} />}
         {error && <Offline message={error} onRetry={load} />}
         {!loading && !error && metrics && (
           <>
@@ -96,39 +117,108 @@ export default function Console() {
 }
 
 /* ── shared bits ─────────────────────────────────────────────────────────── */
-function Loading({ label = 'Compiling the catalogue…' }) {
+const STAGE_LABELS = {
+  ingest: 'Reading the catalogue',
+  families: 'Clustering families',
+  induction: 'Inducing the vocabulary',
+  entity: 'Resolving manufacturers',
+  extract: 'Extracting attributes',
+  propagate: 'Propagating between siblings',
+  sourcing: 'Reading manufacturer documents',
+  compose: 'Building descriptions',
+  verify: 'Verifying and round-tripping',
+  assemble: 'Assembling 252 columns',
+  review: 'Grouping the review queue',
+  search: 'Scoring search readiness',
+}
+
+function Loading({ label = 'Compiling the catalogue…', progress }) {
+  const secs = progress?.building_for
   return (
     <div className="cons__state">
       <span className="cons__spinner" aria-hidden="true" />
       <p className="cons__stateText">{label}</p>
-      <p className="note">
-        The first request triggers a full run of the Python pipeline. Nothing here is
-        cached from a previous session.
+      {secs != null && (
+        <p className="cons__stateElapsed mono">{secs.toFixed(1)}s elapsed</p>
+      )}
+      <p className="note cons__stateNote">
+        Nine stages over {progress?.rows ? progress.rows.toLocaleString() : 'the whole'}{' '}
+        catalogue, with zero model calls. Nothing here is cached from a previous session,
+        and nothing is mocked — the console reads whatever the pipeline actually produced.
       </p>
+      <ul className="cons__stages">
+        {Object.entries(STAGE_LABELS).map(([k, v]) => (
+          <li key={k}>{v}</li>
+        ))}
+      </ul>
     </div>
   )
 }
 
+/** Distinguish "the server is not running" from a genuine API error. */
+function diagnose(message) {
+  const m = String(message || '')
+  if (/^0\b|Failed to fetch|NetworkError|Load failed/i.test(m)) {
+    return {
+      title: 'The compiler is not running.',
+      why:
+        'The browser could not reach the API at all. The Python server has to be up: ' +
+        'the console reads a live run and has no offline fixtures, on purpose.',
+      showCommand: true,
+    }
+  }
+  if (/^404/.test(m)) {
+    return {
+      title: 'The compiler is not running.',
+      why:
+        'The request for /api reached a server, but not this one — a 404 here almost ' +
+        'always means the Vite dev server answered because nothing was listening on ' +
+        'port 8000 to proxy to.',
+      showCommand: true,
+    }
+  }
+  return {
+    title: 'The compile failed.',
+    why: 'The server is up, but the pipeline raised an error. The message is below.',
+    showCommand: false,
+  }
+}
+
 function Offline({ message, onRetry }) {
+  const d = diagnose(message)
   return (
     <div className="cons__state">
       <span className="cons__stateIcon">
         <Icon name="warning" size={20} />
       </span>
-      <p className="cons__stateText">The compiler is not reachable.</p>
-      <p className="note cons__stateNote">
-        {message}
-        <br />
-        <br />
-        Start it with:
-        <code className="cons__code">python -m uniforge.cli serve</code>
-        then reload. This console reads a live run — it has no offline fixtures on purpose.
-      </p>
-      {onRetry && (
-        <button type="button" className="btn btn--primary" onClick={onRetry}>
-          Retry
-        </button>
+      <p className="cons__stateText">{d.title}</p>
+      <p className="note cons__stateNote">{d.why}</p>
+
+      {d.showCommand && (
+        <div className="cons__fix">
+          <p className="meta">Start it, then retry</p>
+          <code className="cons__code">python -m uniforge.cli serve</code>
+          <p className="note">
+            That serves the API and this console together on{' '}
+            <span className="mono">http://127.0.0.1:8000</span>. If you are on the Vite
+            dev server at port 5173, run the command above in a second terminal — Vite
+            proxies <span className="mono">/api</span> to it.
+          </p>
+        </div>
       )}
+
+      <p className="cons__stateErr mono">{message}</p>
+
+      <div className="cons__stateActions">
+        {onRetry && (
+          <button type="button" className="btn btn--primary" onClick={onRetry}>
+            Retry
+          </button>
+        )}
+        <a className="btn btn--ghost" href="/">
+          Back to the site
+        </a>
+      </div>
     </div>
   )
 }
@@ -942,10 +1032,18 @@ function Sourcing() {
       </div>
 
       {s.reconstructed && (
-        <p className="cons__flash cons__flash--warn">
-          <Icon name="warning" size={13} /> The cached documents in this run are
-          reconstructed fixtures, not live captures. {s.note}
-        </p>
+        <div className="cons__flash cons__flash--warn">
+          <Icon name="warning" size={13} />
+          <span>
+            <strong>These are reconstructed fixtures, not live captures.</strong> The
+            structure matches a real manufacturer page — a spec block, a feature list, a
+            marketing paragraph, document links — but the wording is generated, so treat
+            the sourced values as a demonstration of the mechanism rather than as facts
+            about these products. Replace them with genuine caches using{' '}
+            <span className="mono">uniforge source --fetch --discover</span>; the index
+            format is identical and the flag clears itself.
+          </span>
+        </div>
       )}
 
       <Panel title="Test the gate" meta="nothing is requested">
@@ -970,13 +1068,17 @@ function Sourcing() {
         </form>
         {verdict && (
           <div className={`gateverdict gateverdict--${verdict.verdict}`}>
-            <span className="badge badge--{verdict.verdict}">
-              {verdict.verdict.toUpperCase()}
-            </span>
-            <span className="mono">{verdict.domain}</span>
-            <span>{verdict.reason}</span>
+            <StatusBadge tone={verdict.verdict === 'admitted' ? 'verified' : 'review'}>
+              {verdict.verdict}
+            </StatusBadge>
+            <span className="mono gateverdict__dom">{verdict.domain}</span>
+            <span className="gateverdict__why">{verdict.reason}</span>
           </div>
         )}
+        <p className="note cpanel__note">
+          Nothing is requested. The verdict is reached from the domain alone, which is the
+          point — an excluded source is never contacted.
+        </p>
       </Panel>
 
       <div className="cons__two">

@@ -11,7 +11,7 @@ import { chromium } from 'playwright'
 import { mkdirSync } from 'node:fs'
 
 const BASE = process.argv[2] ?? 'http://127.0.0.1:8000'
-const OUT = 'data/out/screens'
+const OUT = '../data/out/screens'
 mkdirSync(OUT, { recursive: true })
 
 const VIEWPORTS = [
@@ -38,28 +38,50 @@ for (const vp of VIEWPORTS) {
 
   await page.goto(BASE, { waitUntil: 'networkidle' })
 
-  // scroll the whole page so every IntersectionObserver fires
+  // Scroll the whole page so every IntersectionObserver fires.
+  //
+  // Pace matters. Stepping faster than a frame or two lets the browser coalesce
+  // observer callbacks, and reading opacity before the longest transition-delay (0.56s)
+  // has elapsed reports elements as stuck when they are merely settling. Both produce
+  // false failures, so: half-viewport steps, 220ms apart, then a settle pause.
   await page.evaluate(async () => {
-    const step = window.innerHeight * 0.7
+    const step = window.innerHeight * 0.5
     for (let y = 0; y < document.body.scrollHeight; y += step) {
       window.scrollTo(0, y)
-      await new Promise((r) => setTimeout(r, 90))
+      await new Promise((r) => setTimeout(r, 220))
     }
+    await new Promise((r) => setTimeout(r, 1400))
     window.scrollTo(0, 0)
-    await new Promise((r) => setTimeout(r, 500))
+    await new Promise((r) => setTimeout(r, 300))
   })
 
   const audit = await page.evaluate(() => {
     const de = document.documentElement
-    // anything wider than the viewport is a horizontal-overflow bug
+
+    // An element wider than the viewport only matters if nothing clips it. A decorative
+    // radial glow inside `overflow: hidden` is intentional, not a layout bug.
+    const clippedByAncestor = (el) => {
+      let p = el.parentElement
+      while (p) {
+        const o = getComputedStyle(p)
+        if (o.overflowX === 'hidden' || o.overflow === 'hidden') return true
+        p = p.parentElement
+      }
+      return false
+    }
     const wide = [...document.querySelectorAll('*')]
-      .filter((el) => el.getBoundingClientRect().width > de.clientWidth + 2)
+      .filter(
+        (el) =>
+          el.getBoundingClientRect().width > de.clientWidth + 2 &&
+          !clippedByAncestor(el)
+      )
       .slice(0, 6)
       .map((el) => `${el.tagName.toLowerCase()}.${el.className?.toString().slice(0, 40)}`)
 
-    // sections that never became visible
-    const stuck = [...document.querySelectorAll('.reveal')]
-      .filter((el) => getComputedStyle(el).opacity === '0').length
+    // A reveal is stuck only if it never received .is-in. Opacity alone is ambiguous.
+    const stuck = [...document.querySelectorAll('.reveal')].filter(
+      (el) => !el.classList.contains('is-in')
+    ).length
 
     const ids = [...document.querySelectorAll('[id]')].map((e) => e.id)
     const anchors = [...document.querySelectorAll('a[href^="#"]')]
@@ -97,8 +119,15 @@ for (const vp of VIEWPORTS) {
     problems += 1
   }
 
-  await page.screenshot({ path: `${OUT}/landing-${vp.name}.png`, fullPage: vp.name === 'desktop' })
+  // Viewport shot first, and re-pin the scroll each time: a full-page capture moves the
+  // scroll position, so taking the viewport shot afterwards photographs empty space.
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.waitForTimeout(450)
   await page.screenshot({ path: `${OUT}/hero-${vp.name}.png`, fullPage: false })
+
+  await page.evaluate(() => window.scrollTo(0, 0))
+  await page.waitForTimeout(250)
+  await page.screenshot({ path: `${OUT}/landing-${vp.name}.png`, fullPage: true })
   await ctx.close()
 }
 

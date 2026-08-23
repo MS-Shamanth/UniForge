@@ -477,9 +477,16 @@ def _self_checks(records, validations, ledger, vocab, limit_fails, unit_fails,
 
 
 def run_and_write(options: C.RunOptions | None = None,
-                  reviewer: OV.Overrides | None = None) -> RunResult:
+                  reviewer: OV.Overrides | None = None,
+                  write_xlsx: bool = True) -> RunResult:
+    """`write_xlsx=False` skips the workbook, which is ~70% of the total wall time.
+
+    The server uses that: it compiles for the console and generates the workbook only when
+    someone asks to download it. The CLI writes both, because someone running `compile`
+    wants the deliverables on disk.
+    """
     result = run(options, reviewer)
-    paths = export.write_delivery(result.records)
+    paths = export.write_delivery(result.records, include_xlsx=write_xlsx)
     schema = export.verify_delivery_schema(paths["csv"])
     result.metrics["output"]["files"] = {k: str(v) for k, v in paths.items()}
     result.metrics["output"]["schema_round_trip"] = schema
@@ -494,6 +501,25 @@ def run_and_write(options: C.RunOptions | None = None,
     result.metrics["self_checks"]["all_pass"] = (
         result.metrics["self_checks"]["passed"]
         == result.metrics["self_checks"]["total"])
+
+    # When the workbook was written, read it back and count the cells. A truncated export
+    # opens cleanly and looks correct, so shape alone is not enough evidence.
+    if write_xlsx and "xlsx" in paths:
+        xl_check = export.verify_xlsx_content(paths["xlsx"], result.records)
+        result.metrics["output"]["xlsx_round_trip"] = xl_check
+        result.metrics["self_checks"]["checks"].append({
+            "check": "workbook re-reads with every populated cell intact",
+            "pass": bool(xl_check["ok"]),
+            "detail": (f"{xl_check['populated_read']:,} of "
+                       f"{xl_check['populated_expected']:,} cells, "
+                       f"{xl_check['rows_read']:,} rows"),
+        })
+        result.metrics["self_checks"]["total"] += 1
+        if xl_check["ok"]:
+            result.metrics["self_checks"]["passed"] += 1
+        result.metrics["self_checks"]["all_pass"] = (
+            result.metrics["self_checks"]["passed"]
+            == result.metrics["self_checks"]["total"])
 
     export.write_json(export.METRICS_JSON, result.metrics)
     export.write_json(export.EVIDENCE_JSON, result.ledger.to_dict(limit=120))

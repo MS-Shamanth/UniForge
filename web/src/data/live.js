@@ -2,7 +2,7 @@
  * GENERATED — do not edit.
  *
  * Written by tools/export_web_metrics.py from data/out/metrics.json.
- * Source run: 2026-08-23T17:43:45+00:00 · uniforge/1.0.0
+ * Source run: 2026-08-23T19:38:07+00:00 · uniforge/1.0.0
  * Input: uniforge_reconstruction_1000.xlsx · 1000 rows
  *
  * The page prefers these values over the bundled submission figures, so the
@@ -46,7 +46,7 @@ export const ENRICHMENT = {
 
 export const COMPLIANCE = {
   "rowsCompiled": 1000,
-  "compileSeconds": 2.5396,
+  "compileSeconds": 2.4083,
   "characterLimitPct": 100.0,
   "characterLimitChecks": 5000,
   "approvedUnitPct": 100.0,
@@ -55,8 +55,8 @@ export const COMPLIANCE = {
   "populatedCellsBefore": 3399,
   "populatedCellsAfter": 47197,
   "populatedCellFactor": 13.89,
-  "selfChecksPassed": 15,
-  "selfChecksTotal": 15
+  "selfChecksPassed": 16,
+  "selfChecksTotal": 16
 }
 
 export const SEARCH = {

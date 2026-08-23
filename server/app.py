@@ -83,6 +83,7 @@ class Run:
         self._input: Path | None = None
         self._limit: int | None = _row_limit()
         self._building = False
+        self._build_started: float = 0.0
         self._error: str | None = None
 
     @property
@@ -95,9 +96,28 @@ class Run:
             "building": self._building,
             "error": self._error,
             "built_at": self._built_at,
+            "building_for": (round(time.time() - self._build_started, 1)
+                             if self._building else None),
             "input": self._input.name if self._input else None,
             "limit": self._limit,
         }
+
+    def warm(self) -> None:
+        """Compile in the background at startup so the console opens instantly.
+
+        Without this the first visitor pays for the whole pipeline inside their request,
+        which reads as a broken page rather than a busy one.
+        """
+        if self._building or self._result is not None:
+            return
+
+        def work() -> None:
+            try:
+                self.get()
+            except Exception:
+                pass                       # the error is already recorded on the instance
+
+        threading.Thread(target=work, name="uniforge-warm", daemon=True).start()
 
     def get(self) -> pipeline.RunResult:
         with self._lock:
@@ -124,10 +144,13 @@ class Run:
 
     def _build(self) -> None:
         self._building = True
+        self._build_started = time.time()
         self._error = None
         try:
             opt = C.RunOptions(input_path=self._input, limit=self._limit)
-            self._result = pipeline.run_and_write(opt)
+            # The workbook is skipped here: it costs more than the whole compile and is
+            # generated on demand by /api/download/xlsx instead.
+            self._result = pipeline.run_and_write(opt, write_xlsx=False)
             self._built_at = time.time()
         except Exception as exc:                      # surfaced to the client
             self._error = f"{type(exc).__name__}: {exc}"
@@ -137,6 +160,17 @@ class Run:
 
 
 RUN = Run()
+
+
+@app.on_event("startup")
+def _warm_on_boot() -> None:
+    """Start compiling as soon as the process is up, off the request path.
+
+    /api/health answers immediately either way, so a platform health check still passes
+    while this runs.
+    """
+    if os.environ.get("UNIFORGE_NO_WARMUP", "") != "1":
+        RUN.warm()
 
 
 # ======================================================================================
@@ -642,9 +676,21 @@ def reset_input() -> dict[str, Any]:
             "rows": result.metrics["input"]["row_count"]}
 
 
+@app.get("/api/status")
+def status() -> dict[str, Any]:
+    """Poll target while a compile is running. Never blocks."""
+    st = RUN.status()
+    return {
+        **st,
+        "stage_seconds": (RUN._result.metrics["meta"]["stage_seconds"]
+                          if RUN._result else None),
+        "rows": (RUN._result.metrics["input"]["row_count"] if RUN._result else None),
+    }
+
+
 @app.get("/api/download/{fmt}")
 def download(fmt: str) -> Response:
-    RUN.get()
+    result = RUN.get()
     if fmt == "csv":
         p = C.DATA_OUT / export.DELIVERY_CSV
         media = "text/csv"
@@ -652,6 +698,10 @@ def download(fmt: str) -> Response:
         p = C.DATA_OUT / export.DELIVERY_XLSX
         media = ("application/vnd.openxmlformats-officedocument"
                  ".spreadsheetml.sheet")
+        # Built on demand: the workbook costs more than the whole compile, so it is not
+        # written on every run. Regenerate when it is missing or older than the run.
+        if not p.exists() or p.stat().st_mtime < RUN._built_at:
+            export.write_xlsx(result.records)
     elif fmt == "metrics":
         p = C.DATA_OUT / export.METRICS_JSON
         media = "application/json"

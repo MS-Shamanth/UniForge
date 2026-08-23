@@ -78,7 +78,8 @@ export default function Navbar() {
               GitHub
             </a>
             <a className="btn btn--primary nav__cta" href="/console">
-              View Demo
+              <span className="nav__ctaDot" aria-hidden="true" />
+              Live Demo
             </a>
             <button
               type="button"
@@ -108,7 +109,8 @@ export default function Navbar() {
           ))}
           <div className="sheet__foot">
             <a className="btn btn--primary" href="/console">
-              View Demo
+              <span className="nav__ctaDot" aria-hidden="true" />
+              Open the Live Demo
             </a>
             <a
               className="btn btn--ghost"

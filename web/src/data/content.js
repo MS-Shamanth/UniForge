@@ -10,9 +10,9 @@ export const GITHUB_URL = 'https://github.com/'
 export const NAV_LINKS = [
   { label: 'Product', href: '#product' },
   { label: 'How It Works', href: '#how-it-works' },
+  { label: 'Technology', href: '#technology' },
   { label: 'Evidence', href: '#evidence' },
   { label: 'Results', href: '#results' },
-  { label: 'Technology', href: '#technology' },
 ]
 
 export const HERO_PILLS = ['LLM Extraction', 'Rule-Based Logic', 'Traceable Evidence']

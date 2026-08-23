@@ -24,6 +24,7 @@ async function req(path, options) {
 
 export const api = {
   health: () => req('/api/health'),
+  status: () => req('/api/status'),
   metrics: () => req('/api/metrics'),
   schema: () => req('/api/schema'),
   vocabulary: () => req('/api/vocabulary'),

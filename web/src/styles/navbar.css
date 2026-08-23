@@ -186,3 +186,25 @@
     display: none;
   }
 }
+
+/* a small live indicator on the nav CTA, so "Live Demo" reads as running */
+.nav__ctaDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #12040f;
+  flex: none;
+  animation: livepulse 2s var(--ease) infinite;
+}
+
+@keyframes livepulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.78);
+  }
+}
