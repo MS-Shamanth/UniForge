@@ -3,15 +3,25 @@ __pycache__/
 *.pyc
 *.pyo
 *.egg-info/
-dist/
-build/
+# anchored to the root: an unanchored `dist/` would also swallow web/dist,
+# which has to be committed for the Python-only Render build
+/dist/
+/build/
 .venv/
 venv/
 env/
 
 # Node
 web/node_modules/
-web/dist/
+
+# web/dist IS committed on purpose: the Render deploy runs a Python-only build, so the
+# bundle has to be in the repository. Rebuild it before pushing:
+#     cd web && npm run build
+# (The Dockerfile builds it itself and does not rely on this.)
+
+# stray screenshots from web/shoot.mjs
+web/data/
+web/test-results/
 
 # IDE
 .vscode/

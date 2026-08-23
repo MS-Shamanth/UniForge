@@ -16,9 +16,7 @@ and recompile endpoints accept arbitrary spreadsheets and trigger real work.
 """
 from __future__ import annotations
 
-import io
-import json
-import shutil
+import os
 import threading
 import time
 from pathlib import Path
@@ -39,26 +37,51 @@ from uniforge.seed import headers as H
 app = FastAPI(title="UniForge", version=PIPELINE_VERSION,
               description="The product-content compiler. " + TAGLINE)
 
+# In a hosted deployment the bundle is served from the same origin, so CORS only needs to
+# cover the local Vite dev servers. UNIFORGE_CORS_ORIGINS can add more, comma separated.
+_DEV_ORIGINS = [
+    "http://localhost:5173", "http://127.0.0.1:5173",
+    "http://localhost:4173", "http://127.0.0.1:4173",
+]
+_EXTRA_ORIGINS = [
+    o.strip() for o in os.environ.get("UNIFORGE_CORS_ORIGINS", "").split(",")
+    if o.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173",
-                   "http://localhost:4173", "http://127.0.0.1:4173"],
+    allow_origins=_DEV_ORIGINS + _EXTRA_ORIGINS,
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
+# Free hosting tiers are memory-bound, so the deploy can cap how many rows a run
+# compiles. Unset or 0 means the whole catalogue.
+def _row_limit() -> int | None:
+    raw = os.environ.get("UNIFORGE_ROW_LIMIT", "").strip()
+    if not raw:
+        return None
+    try:
+        n = int(raw)
+    except ValueError:
+        return None
+    return n if n > 0 else None
+
 
 # ======================================================================================
 # one cached run, rebuilt on demand
 # ======================================================================================
+_KEEP = object()   # sentinel: "leave this setting as it is"
+
+
 class Run:
     def __init__(self) -> None:
         self._lock = threading.Lock()
         self._result: pipeline.RunResult | None = None
         self._built_at: float = 0.0
         self._input: Path | None = None
-        self._limit: int | None = None
+        self._limit: int | None = _row_limit()
         self._building = False
         self._error: str | None = None
 
@@ -83,11 +106,18 @@ class Run:
             assert self._result is not None
             return self._result
 
-    def rebuild(self, input_path: Path | None = None,
-                limit: int | None = None) -> pipeline.RunResult:
+    def rebuild(self, input_path: Path | None = _KEEP,
+                limit: int | None = _KEEP) -> pipeline.RunResult:
+        """`_KEEP` leaves a setting alone; passing None genuinely clears it.
+
+        Without the sentinel, "restore the bundled catalogue" could not be expressed:
+        `input_path=None` would be indistinguishable from "don't change the input".
+        """
         with self._lock:
-            self._input = input_path if input_path is not None else self._input
-            self._limit = limit if limit is not None else self._limit
+            if input_path is not _KEEP:
+                self._input = input_path
+            if limit is not _KEEP:
+                self._limit = limit
             self._build()
             assert self._result is not None
             return self._result
@@ -195,12 +225,20 @@ def _delivery_row(r: pipeline.RunResult, row_id: int) -> dict[str, str]:
 # ======================================================================================
 @app.get("/api/health")
 def health() -> dict[str, Any]:
+    """Deliberately does NOT trigger a compile.
+
+    A health check that waited for the pipeline would fail every cold start on a host
+    that expects a response in a few seconds. This answers immediately and reports
+    whether a run is ready, building, or has not started.
+    """
     return {
         "ok": True,
         "pipeline_version": PIPELINE_VERSION,
         "tagline": TAGLINE,
         "run": RUN.status(),
         "delivery_columns": len(H.HEADERS),
+        "row_limit": _row_limit(),
+        "web_bundle_present": (C.ROOT / "web" / "dist" / "index.html").exists(),
     }
 
 

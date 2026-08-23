@@ -1,0 +1,34 @@
+# Render blueprint for UniForge.
+#
+# The web bundle is committed to the repository (web/dist), so the deploy needs Python
+# only — no Node toolchain on the build host, and no chance of a frontend build failing
+# a backend deploy. Rebuild it locally with `npm run build` in web/ before pushing.
+#
+# The start command matters: the ASGI app is `server.app:app`, not `app:app`. Pointing
+# uvicorn at `app` is what produces "Could not import module 'app'".
+
+services:
+  - type: web
+    name: uniforge
+    runtime: python
+    plan: free
+    region: oregon
+
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: python -m uvicorn server.app:app --host 0.0.0.0 --port $PORT --workers 1
+
+    healthCheckPath: /api/health
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      # Keep the first compile inside the free tier's memory ceiling. Raise or remove
+      # this to compile the whole catalogue.
+      - key: UNIFORGE_ROW_LIMIT
+        value: "1000"
+      # Live retrieval stays off in a hosted environment. The cached documents in
+      # data/docs/ are what the pipeline reads.
+      - key: UNIFORGE_ALLOW_FETCH
+        value: "0"
+      - key: PYTHONUNBUFFERED
+        value: "1"
