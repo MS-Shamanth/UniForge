@@ -1,0 +1,34 @@
+Rheem XE69M96H48
+Rheem Performance 30 Gallon Electric Water Heater, 240 V, 5500 W, 6 Year Warranty
+
+Overview
+A 30 gallon residential electric water heater with two 5500 watt copper immersion elements, a factory-installed temperature and pressure relief valve, and a premium-grade anode rod for extended tank life in aggressive water.
+
+Features
+- Two copper immersion heating elements for fast recovery
+- Premium grade anode rod extends tank life
+- Factory installed temperature and pressure relief valve
+- Automatic thermostat with high-limit control
+- Thick non-CFC foam insulation reduces standby loss
+- Six year limited tank and parts warranty
+
+Applications
+- Residential potable hot water
+
+Specifications
+Series: Performance
+Tank Capacity: 30 gal
+Voltage: 240 V
+Wattage: 5500 W
+Recovery Rate: 21 gph
+Element Count: 2
+Maximum Temperature: 150 deg F
+Warranty Term: 6 yr
+Energy Star: No
+Country of Origin: United States
+
+Documents
+Specification Sheet: https://www.rheem.com/spec/xe69m96h48.pdf
+Installation Guide: https://www.rheem.com/install/xe69m96h48.pdf
+
+Manufacturer Part Number: XE69M96H48

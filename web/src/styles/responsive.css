@@ -1,0 +1,290 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive. Layouts are recomposed at each step rather than scaled down:
+   horizontal rails become vertical stacks, three-column grids become two, and
+   right-aligned figures return to the left edge where the eye expects them.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── tablet ─────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .split,
+  .split--even,
+  .split--wide-left {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+
+  .idea__proof,
+  .learn__body,
+  .res__lower {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 42px;
+  }
+
+  .arch__top {
+    gap: 30px;
+  }
+
+  .layer {
+    grid-template-columns: 110px minmax(0, 1fr);
+    row-gap: 20px;
+  }
+
+  .layer__items {
+    grid-column: 1 / -1;
+  }
+
+  .owner__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .owner__who {
+    text-align: left;
+  }
+
+  .enrich__core {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    row-gap: 32px;
+  }
+
+  .enrich__mid {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .enrich__side--after {
+    text-align: left;
+  }
+
+  .enrich__side--after .metric {
+    align-items: flex-start;
+  }
+
+  .enrich__side--after .metric__sub,
+  .enrich__side--after .metric__label {
+    text-align: left;
+  }
+
+  .res__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 46px;
+  }
+
+  .cta__mark {
+    order: -1;
+    justify-self: start;
+  }
+
+  .cta__event {
+    text-align: left;
+  }
+
+  .idea__flow {
+    flex-wrap: wrap;
+  }
+
+  .idea__stop {
+    flex: 1 1 46%;
+    min-width: 220px;
+  }
+
+  .idea__stop:nth-child(2) {
+    border-right: 0;
+  }
+}
+
+/* ── narrow tablet / large phone ────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .trust__states {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .state {
+    min-height: 0;
+  }
+
+  .trust__refusalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+  }
+
+  .statstrip--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contra__outcome {
+    flex-direction: column;
+    gap: 22px;
+  }
+}
+
+/* ── phone ──────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .section {
+    padding-block: 68px;
+  }
+
+  .section__head {
+    margin-bottom: 36px;
+  }
+
+  .field {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding-block: 11px;
+  }
+
+  .layer {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .layer__rail {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .layer__tick {
+    width: 20px;
+  }
+
+  .enrich__core {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .enrich__mid {
+    grid-row: auto;
+    order: 2;
+  }
+
+  .enrich__limit {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .res__grid,
+  .statstrip--3,
+  .statstrip--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .idea__flow {
+    flex-direction: column;
+  }
+
+  .idea__stop {
+    flex: none;
+    min-width: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--hair);
+  }
+
+  .idea__stop:last-child {
+    border-bottom: 0;
+  }
+
+  .idea__stopArrow {
+    transform: rotate(90deg);
+  }
+
+  .codeblock {
+    font-size: 11px;
+    padding: 14px;
+  }
+
+  .codeblock__row {
+    gap: 12px;
+  }
+
+  .codeblock__pn {
+    min-width: 13ch;
+  }
+
+  .learn__derive {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .learn__deriveArrow {
+    height: 30px;
+  }
+
+  .searchrow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .funnel__row {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .transform {
+    gap: 12px;
+  }
+
+  .transform__end {
+    font-size: 9.5px;
+  }
+
+  .fan {
+    max-width: 280px;
+  }
+
+  .cta__credit {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .foot__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* ── very narrow ───────────────────────────────────────────────────────── */
+@media (max-width: 420px) {
+  .res__grid,
+  .statstrip--2,
+  .statstrip--3,
+  .statstrip--4,
+  .trust__refusalGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__actions .btn,
+  .cta__actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ── print: keep the deck-facing figures legible ───────────────────────── */
+@media print {
+  body::before,
+  .hero__grid,
+  .hero__glow,
+  .grid-bleed,
+  .nav,
+  .sheet {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

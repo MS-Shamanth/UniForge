@@ -1,0 +1,35 @@
+Apollo 70LF-3150
+Apollo Bronze Ball Valve, 2 in, Full Port, 600 psi WOG, Lever Handle
+
+Overview
+A two-piece bronze ball valve with a full-port chrome-plated brass ball and reinforced PTFE seats, rated for water, oil and gas service, with a blowout-proof stem and a packing gland that stays serviceable in place.
+
+Features
+- Full port for minimal pressure drop
+- Chrome-plated brass ball and blowout-proof stem
+- Reinforced PTFE seats and thrust washer
+- Adjustable packing gland serviceable in place
+- Vinyl-coated lever handle
+- Lead-free bronze body
+
+Applications
+- Water shutoff
+- Compressed air isolation
+
+Specifications
+Nominal Size: 2 in
+End Connection: FNPT x FNPT
+Body Material: Bronze
+Pressure Rating: 600 psi
+Port Type: Full Port
+Handle Type: Lever
+Ball Material: Chrome Plated Brass
+Seat Material: Reinforced PTFE
+Maximum Temperature: 406 deg F
+Standard: MSS SP-110, NSF/ANSI 61
+Package Quantity: 1 ea
+
+Documents
+Specification Sheet: https://www.apollovalves.com/spec/70lf-3150.pdf
+
+Manufacturer Part Number: 70LF-3150

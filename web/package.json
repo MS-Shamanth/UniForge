@@ -1,0 +1,21 @@
+{
+  "name": "uniforge-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "UniForge - AI-Powered Product Intelligence. Landing page and prototype console.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.3.4",
+    "playwright": "^1.49.1",
+    "vite": "5.4.11"
+  }
+}

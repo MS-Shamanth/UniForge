@@ -1,0 +1,32 @@
+Carrier 24ABC6491
+Carrier Comfort Series Air Conditioner Condensing Unit, 5 Ton, 16 SEER, R-410A
+
+Overview
+A 5 ton single-stage condensing unit rated at 16 SEER, built around a scroll compressor and a louvred steel cabinet that shields the coil from yard damage.
+
+Features
+- Single-stage scroll compressor
+- Louvred steel cabinet protects the condenser coil
+- R-410A refrigerant
+- Weather-resistant control box
+- Filter drier factory installed
+
+Applications
+- Residential split-system cooling
+
+Specifications
+Series: Comfort Series
+Cooling Capacity: 5 ton
+SEER Rating: 16 SEER
+Voltage: 208/230 V
+Phase: 1 ph
+Refrigerant: R-410A
+Sound Level: 72 dBA
+Compressor Type: Scroll
+Country of Origin: United States
+Warranty Term: 10 yr
+
+Documents
+Specification Sheet: https://www.carrier.com/spec/24abc6491.pdf
+
+Manufacturer Part Number: 24ABC6491

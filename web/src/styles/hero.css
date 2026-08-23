@@ -1,0 +1,315 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Hero — split composition. Text left, a real record and its path right.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 118px;
+  padding-bottom: 30px;
+  overflow: hidden;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--hair) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hair) 1px, transparent 1px);
+  background-size: 92px 92px;
+  mask-image: radial-gradient(78% 68% at 62% 34%, #000 8%, transparent 72%);
+  -webkit-mask-image: radial-gradient(78% 68% at 62% 34%, #000 8%, transparent 72%);
+  opacity: 0.75;
+}
+
+.hero__glow {
+  position: absolute;
+  top: -22%;
+  right: -14%;
+  width: 780px;
+  height: 780px;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgba(232, 75, 216, 0.13),
+    transparent 70%
+  );
+}
+
+.hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  gap: clamp(40px, 6vw, 90px);
+  align-items: center;
+  flex: 1;
+  padding-bottom: clamp(38px, 6vw, 74px);
+}
+
+/* ── left ───────────────────────────────────────────────────────────────── */
+.hero__eyebrow {
+  color: var(--magenta);
+  letter-spacing: 0.19em;
+  margin: 0 0 26px;
+}
+
+.hero__head {
+  margin-bottom: 26px;
+}
+
+.hero__lede {
+  max-width: 52ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.hero__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+/* ── right: the rail ───────────────────────────────────────────────────── */
+.hero__viz {
+  position: relative;
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: clamp(16px, 2.4vw, 30px);
+  align-items: center;
+}
+
+.hero__rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-block: 6px;
+}
+
+.rail__stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 9px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+}
+
+.rail__node {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--hair-strong);
+  background: var(--bg);
+  transition:
+    border-color 0.42s var(--ease),
+    background 0.42s var(--ease),
+    box-shadow 0.42s var(--ease);
+}
+
+.rail__stop.is-on .rail__node {
+  border-color: var(--magenta);
+  background: var(--magenta);
+  box-shadow: 0 0 0 4px var(--magenta-soft);
+}
+
+.rail__label {
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: var(--faint);
+  transition: color 0.42s var(--ease);
+}
+
+.rail__stop.is-on .rail__label {
+  color: var(--text);
+}
+
+.rail__link {
+  position: absolute;
+  left: 4px;
+  top: 34px;
+  bottom: -22px;
+  width: 1px;
+  background: var(--hair-strong);
+  overflow: hidden;
+}
+
+.rail__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--magenta);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s var(--ease);
+}
+
+.rail__stop.is-on .rail__link::after {
+  transform: scaleY(1);
+}
+
+/* ── right: the card ───────────────────────────────────────────────────── */
+.hero__card {
+  position: relative;
+}
+
+.hero__card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 7px;
+  background: linear-gradient(
+    150deg,
+    var(--magenta-line),
+    transparent 42%,
+    transparent 62%,
+    rgba(232, 75, 216, 0.16)
+  );
+  z-index: -1;
+}
+
+.hero__card .datacard__foot {
+  color: var(--magenta);
+  opacity: 0.72;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+/* ── floor ─────────────────────────────────────────────────────────────── */
+.hero__floor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 4vw, 52px);
+  padding-top: 26px;
+  border-top: 1px solid var(--hair);
+}
+
+.hero__floorItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero__floorValue {
+  font-size: clamp(1.2rem, 2.2vw, 1.72rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  line-height: 1;
+}
+
+.hero__floorDiv {
+  width: 1px;
+  height: 34px;
+  background: var(--hair);
+}
+
+.hero__floorSpacer {
+  flex: 1;
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--faint);
+  transition: color 0.22s var(--ease);
+}
+
+.hero__scroll:hover {
+  color: var(--white);
+}
+
+.hero__scroll svg {
+  animation: nudge 2.4s var(--ease) infinite;
+}
+
+@keyframes nudge {
+  0%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+  82% {
+    transform: translateY(3px);
+  }
+}
+
+@media (max-width: 1080px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+
+  .hero__viz {
+    grid-template-columns: 110px minmax(0, 1fr);
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 100px;
+    min-height: auto;
+  }
+
+  .hero__viz {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .hero__rail {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .rail__stop {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  .rail__link {
+    left: 14px;
+    right: -100%;
+    top: 4px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .rail__link::after {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .rail__stop.is-on .rail__link::after {
+    transform: scaleX(1);
+  }
+
+  .hero__floor {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .hero__floorDiv,
+  .hero__floorSpacer {
+    display: none;
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+}

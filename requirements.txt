@@ -1,0 +1,16 @@
+# UniForge — product-content compiler
+# Core pipeline runs on the standard library + pandas/openpyxl only.
+# No model provider is required: the pipeline is complete with zero model calls.
+
+pandas>=2.0.0
+openpyxl>=3.1.0
+XlsxWriter>=3.1.0
+
+# Web prototype
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.9
+
+# Optional: only used by `uniforge source --fetch` (live manufacturer-domain retrieval).
+# The pipeline never needs it; cached documents ship in data/docs/.
+requests>=2.31.0

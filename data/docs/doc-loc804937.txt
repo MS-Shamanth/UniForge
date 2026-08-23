@@ -1,0 +1,33 @@
+LOCTITE LOC804937
+LOCTITE Threadlocker 290, Red, Medium Strength, 50 mL
+
+Overview
+LOCTITE Threadlocker 290 is a medium-strength methacrylate anaerobic adhesive that seals and locks threaded fasteners against vibration loosening while remaining removable with hand tools.
+
+Features
+- Medium strength, removable with hand tools
+- Cures in the absence of air between close-fitting metal surfaces
+- Prevents loosening from vibration and shock
+- Seals against leakage and corrosion in the thread path
+- Tolerant of minor surface contamination
+
+Applications
+- Threaded fastener locking
+- Vibration-prone assemblies
+
+Specifications
+Product Number: 290
+Colour: Red
+Strength: Medium
+Container Size: 50 mL
+Chemistry: Methacrylate Anaerobic
+Temperature Range: -65 deg F to 300 deg F
+Fixture Time: 10 min
+Full Cure: 24 hr
+Maximum Thread Size: 3/4 in
+
+Documents
+Technical Data Sheet: https://www.henkel-adhesives.com/tds/loc804937.pdf
+Safety Data Sheet: https://www.henkel-adhesives.com/sds/loc804937.pdf
+
+Manufacturer Part Number: LOC804937

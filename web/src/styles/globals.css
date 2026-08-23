@@ -1,0 +1,420 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   UniForge — design tokens and primitives
+
+   Near-black ground, one geometric sans, magenta as an accent rather than a
+   palette. Amber appears only on review and warning states. No blue, no green.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0d0c15;
+  --bg-deep: #08070d;
+  --panel: #15131f;
+  --panel-lift: #1c1726;
+  --panel-purple: #24172d;
+
+  --white: #f7f7f8;
+  --text: rgba(247, 247, 248, 0.86);
+  --muted: rgba(247, 247, 248, 0.58);
+  --faint: rgba(247, 247, 248, 0.35);
+  --ghost: rgba(247, 247, 248, 0.14);
+
+  --magenta: #e84bd8;
+  --magenta-bright: #f45ce6;
+  --magenta-soft: rgba(232, 75, 216, 0.16);
+  --magenta-line: rgba(232, 75, 216, 0.34);
+
+  --amber: #f5b82e;
+  --amber-soft: rgba(245, 184, 46, 0.14);
+
+  --hair: rgba(247, 247, 248, 0.08);
+  --hair-strong: rgba(247, 247, 248, 0.14);
+
+  --shell: 1280px;
+  --pad: clamp(20px, 4vw, 64px);
+  --radius: 4px;
+
+  --mono: 'Inter', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* the page ground: two very low-opacity radial pools, never a full gradient */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      760px 460px at 78% -6%,
+      rgba(232, 75, 216, 0.1),
+      transparent 62%
+    ),
+    radial-gradient(
+      620px 520px at 4% 34%,
+      rgba(122, 63, 168, 0.075),
+      transparent 66%
+    );
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(232, 75, 216, 0.3);
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--magenta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── layout shell ───────────────────────────────────────────────────────── */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(84px, 11vw, 168px);
+}
+
+.section--tight {
+  padding-block: clamp(64px, 8vw, 116px);
+}
+
+.rule {
+  height: 1px;
+  background: var(--hair);
+  border: 0;
+  margin: 0;
+}
+
+.rule--shell {
+  max-width: var(--shell);
+  margin-inline: auto;
+}
+
+/* ── typography ─────────────────────────────────────────────────────────── */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--magenta);
+  margin: 0 0 26px;
+}
+
+.eyebrow__tick {
+  width: 22px;
+  height: 1px;
+  background: var(--magenta);
+  opacity: 0.6;
+  flex: none;
+}
+
+.eyebrow--muted {
+  color: var(--faint);
+}
+
+.eyebrow--muted .eyebrow__tick {
+  background: var(--faint);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--white);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.h-display {
+  font-size: clamp(2.5rem, 6.2vw, 4.65rem);
+  line-height: 1.03;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.h-section {
+  font-size: clamp(1.85rem, 3.9vw, 3.05rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.h-sub {
+  font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+  line-height: 1.28;
+  font-weight: 600;
+}
+
+.lede {
+  font-size: clamp(1rem, 1.35vw, 1.115rem);
+  line-height: 1.66;
+  color: var(--muted);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.accent {
+  color: var(--magenta);
+}
+
+.dim {
+  color: var(--faint);
+}
+
+.meta {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'zero' 1;
+}
+
+/* ── buttons ────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  transition:
+    background 0.22s var(--ease),
+    border-color 0.22s var(--ease),
+    color 0.22s var(--ease),
+    transform 0.22s var(--ease);
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--magenta);
+  color: #12040f;
+  font-weight: 600;
+}
+
+.btn--primary:hover {
+  background: var(--magenta-bright);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  border-color: var(--hair-strong);
+  color: var(--text);
+}
+
+.btn--ghost:hover {
+  border-color: var(--magenta-line);
+  color: var(--white);
+  background: rgba(232, 75, 216, 0.06);
+}
+
+.btn--quiet {
+  padding-inline: 0;
+  color: var(--muted);
+}
+
+.btn--quiet:hover {
+  color: var(--white);
+}
+
+.btn__arrow {
+  transition: transform 0.22s var(--ease);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+/* ── pills, chips, badges ───────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid var(--hair);
+  border-radius: 100px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(21, 19, 31, 0.6);
+}
+
+.pill__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--magenta);
+  flex: none;
+}
+
+/* ── panels ─────────────────────────────────────────────────────────────── */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--hair);
+  border-radius: 6px;
+}
+
+.panel--lift {
+  background: var(--panel-lift);
+}
+
+.panel--purple {
+  background: var(--panel-purple);
+}
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.panel__body {
+  padding: 18px;
+}
+
+/* ── the technical background grid, used sparingly ──────────────────────── */
+.grid-bleed {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(to right, var(--hair) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hair) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000 20%, transparent 78%);
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 40%, #000 20%, transparent 78%);
+}
+
+/* ── motion primitives ─────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.62s var(--ease),
+    transform 0.62s var(--ease);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal[data-d='1'] { transition-delay: 0.07s; }
+.reveal[data-d='2'] { transition-delay: 0.14s; }
+.reveal[data-d='3'] { transition-delay: 0.21s; }
+.reveal[data-d='4'] { transition-delay: 0.28s; }
+.reveal[data-d='5'] { transition-delay: 0.35s; }
+.reveal[data-d='6'] { transition-delay: 0.42s; }
+.reveal[data-d='7'] { transition-delay: 0.49s; }
+.reveal[data-d='8'] { transition-delay: 0.56s; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  padding: 12px 18px;
+  background: var(--magenta);
+  color: #12040f;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

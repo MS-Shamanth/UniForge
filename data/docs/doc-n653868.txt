@@ -1,0 +1,32 @@
+NIBCO N653868
+NIBCO Bronze Coupling, 1-1/4 in, Solder x Solder, 150 psi
+
+Overview
+A cast bronze coupling for potable water, hydronic heating and low-pressure steam service, machined to ASME B16.18 socket dimensions so it seats squarely on Type K, L and M copper tube.
+
+Features
+- Cast bronze body for corrosion resistance in potable water
+- Solder x solder socket ends to ASME B16.18
+- Lead-free composition compliant with NSF/ANSI 61 and 372
+- Suitable for hydronic heating and low-pressure steam
+- Full socket depth for a reliable capillary joint
+
+Applications
+- Potable water distribution
+- Hydronic heating
+
+Specifications
+Nominal Size: 1-1/4 in
+End Connection: Solder x Solder
+Material Construction: Cast Bronze
+Pressure Rating: 150 psi
+Maximum Temperature: 250 deg F
+Standard: ASME B16.18, NSF/ANSI 61
+Finish: Mill
+Lead Free: Yes
+Package Quantity: 1 ea
+
+Documents
+Specification Sheet: https://www.nibco.com/spec/n653868.pdf
+
+Manufacturer Part Number: N653868

@@ -1,0 +1,33 @@
+Leviton T4243-W
+Leviton Tamper-Resistant Duplex Receptacle, 15 A, 125 V, NEMA 5-15R, White
+
+Overview
+A commercial-specification tamper-resistant duplex receptacle with a shutter mechanism that blocks foreign objects while accepting a standard plug, and back-and-side wiring for fast, secure terminations.
+
+Features
+- Tamper-resistant shutter meets NEC 406.12
+- Back and side wire terminations
+- Thermoplastic face resists impact and abrasion
+- Steel mounting strap with brass-plated contacts
+- UL listed and CSA certified
+
+Applications
+- Commercial branch circuits
+- Residential dwelling units
+
+Specifications
+Amperage: 15 A
+Voltage: 125 V
+NEMA Configuration: 5-15R
+Colour: White
+Grade: Commercial Specification
+Mounting: Yoke
+Standard: UL 498, NEC 406.12
+UL Listed: Yes
+CSA Certified: Yes
+Package Quantity: 10 pc
+
+Documents
+Specification Sheet: https://www.leviton.com/spec/t4243-w.pdf
+
+Manufacturer Part Number: T4243-W
