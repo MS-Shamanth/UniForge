@@ -893,10 +893,24 @@ def main() -> None:
     print(f"wrote {C.DATA_DOCS}")
     print(f"  candidates considered      {considered}")
     print(f"  admitted (manufacturer)    {admitted}")
-    print(f"  rejected before request    {len(rejected)} "
-          f"({', '.join(r['domain'] for r in rejected)})")
-    print(f"  blocked by the site        {len(blocked)} "
-          f"({', '.join(b['domain'] + ' ' + b['reason'] for b in blocked)})")
+    # Report per site, not per candidate: two products timing out on frigidaire.com is one
+    # site refusing twice, and printing the domain twice invites double-counting.
+    def by_site(items: list[dict]) -> str:
+        groups: dict[tuple[str, str], int] = {}
+        for it in items:
+            key = (it["domain"], it["reason"])
+            groups[key] = groups.get(key, 0) + 1
+        return ", ".join(
+            f"{dom} {why}" + (f" x{n}" if n > 1 else "")
+            for (dom, why), n in sorted(groups.items())
+        )
+
+    print(f"  rejected before request    {len(rejected)} across "
+          f"{len({r['domain'] for r in rejected})} sites")
+    print(f"      {by_site(rejected)}")
+    print(f"  blocked by the site        {len(blocked)} across "
+          f"{len({b['domain'] for b in blocked})} sites")
+    print(f"      {by_site(blocked)}")
     print(f"  total cached characters    {sum(d['char_length'] for d in documents):,}")
 
 

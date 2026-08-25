@@ -10,18 +10,25 @@
       name="description"
       content="UniForge transforms sparse supplier data into structured, enriched and evidence-backed product intelligence. LLM extracts. Rules decide. Evidence proves."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Inter is self-hosted from /fonts (see tools/fetch_font.py). The Google Fonts
+      stylesheet used to sit here: it is render-blocking, its font file loads after it, and
+      together they cost ~950 ms of a 1.5 s load while the API answered in 5 ms. Serving it
+      ourselves also means the demo renders correctly with no internet at all.
+    -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/inter-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230D0C15'/%3E%3Cpath d='M11 9v8a5 5 0 0 0 10 0V9' stroke='%23E84BD8' stroke-width='2.4' fill='none' stroke-linecap='square'/%3E%3C/svg%3E"
     />
-    <script type="module" crossorigin src="/assets/index-Da31ZnxX.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-QkfPBNQQ.css">
+    <script type="module" crossorigin src="/assets/index-Ba4TC_Yd.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BJezfmtz.css">
   </head>
   <body>
     <div id="root"></div>

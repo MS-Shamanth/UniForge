@@ -1373,3 +1373,13 @@
 .gateverdict__why {
   color: var(--muted);
 }
+
+.gatelist__count {
+  display: block;
+  margin-top: 3px;
+  font-style: normal;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}

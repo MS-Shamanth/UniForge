@@ -113,9 +113,16 @@ class Run:
 
         def work() -> None:
             try:
-                self.get()
+                result = self.get()
             except Exception:
-                pass                       # the error is already recorded on the instance
+                return                     # the error is already recorded on the instance
+            # Then the workbook, still in the background. It is the slowest artefact by a
+            # wide margin, so building it here means the Download button is instant
+            # instead of stalling for the ~13s the export costs.
+            try:
+                export.write_xlsx(result.records)
+            except Exception:
+                pass                       # the download route regenerates it on demand
 
         threading.Thread(target=work, name="uniforge-warm", daemon=True).start()
 

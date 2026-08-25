@@ -207,6 +207,32 @@ class SourcingModel:
     def blocked(self) -> list[GateDecision]:
         return [d for d in self.decisions if d.verdict == BLOCKED]
 
+    @staticmethod
+    def _by_domain(decisions: list[GateDecision]) -> list[dict[str, Any]]:
+        """Group gate decisions by domain and reason.
+
+        A decision is recorded per candidate, which is the truth: three products on
+        frigidaire.com that all time out are three refused requests. But reporting them as
+        three separate rows reads as three different problems, when it is one site
+        refusing three times. So the per-candidate records stay, and the summary groups
+        them with a count of the parts affected.
+        """
+        groups: dict[tuple[str, str], list[GateDecision]] = {}
+        for d in decisions:
+            groups.setdefault((d.domain, d.reason), []).append(d)
+        out = []
+        for (domain, reason), items in sorted(
+            groups.items(), key=lambda kv: (-len(kv[1]), kv[0][0])
+        ):
+            out.append({
+                "domain": domain,
+                "reason": reason,
+                "parts_affected": len(items),
+                "example_part": items[0].part_number,
+                "example_url": items[0].url,
+            })
+        return out
+
     def to_dict(self) -> dict[str, Any]:
         b, a = self.attrs_before, self.attrs_after
         n = max(1, self.enriched_rows)
@@ -215,10 +241,18 @@ class SourcingModel:
             "note": self.index_note,
             "candidates_considered": len(self.decisions),
             "admitted": self.admitted,
+
+            # per-candidate records: every refusal, as it happened
             "rejected_before_request": [d.to_dict() for d in self.rejected],
             "rejected_count": len(self.rejected),
             "blocked_by_site": [d.to_dict() for d in self.blocked],
             "blocked_count": len(self.blocked),
+
+            # grouped for display: one row per site, with how many parts it cost
+            "rejected_domains": self._by_domain(self.rejected),
+            "rejected_domain_count": len({d.domain for d in self.rejected}),
+            "blocked_domains": self._by_domain(self.blocked),
+            "blocked_domain_count": len({d.domain for d in self.blocked}),
             "discarded_because_page_did_not_name_the_part":
                 len(self.discarded_unnamed),
             "documents_cached": len(self.documents),

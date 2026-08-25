@@ -995,6 +995,32 @@ function FamilyDrawer({ fam, onClose }) {
 }
 
 /* ── Sourcing gate ───────────────────────────────────────────────────────── */
+/**
+ * One row per site, not one per candidate.
+ *
+ * Three products on frigidaire.com that all time out are three refused requests, but they
+ * are one site refusing — listing the domain three times reads as three separate problems
+ * rather than one, and invites the reader to double-count.
+ */
+function GateList({ rows, tone = '' }) {
+  if (!rows.length) return <p className="note">None.</p>
+  return (
+    <ul className="gatelist">
+      {rows.map((r) => (
+        <li key={`${r.domain}|${r.reason}`}>
+          <span className="gatelist__dom mono">{r.domain}</span>
+          <span className={`gatelist__why${tone ? ' ' + tone : ''}`}>
+            {r.reason}
+            {r.parts_affected > 1 && (
+              <em className="gatelist__count">{r.parts_affected} parts affected</em>
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 function Sourcing() {
   const [s, setS] = useState(null)
   const [err, setErr] = useState(null)
@@ -1024,9 +1050,11 @@ function Sourcing() {
         <div>
           <h1 className="cons__title">Sourcing gate</h1>
           <p className="note">
-            {s.candidates_considered} candidates · {s.admitted} admitted ·{' '}
-            {s.rejected_count} rejected before any request · {s.blocked_count} blocked by
-            the site
+            {s.candidates_considered} candidates considered · {s.admitted} admitted ·{' '}
+            {s.rejected_count} rejected before any request across{' '}
+            {s.rejected_domain_count ?? s.rejected_count} sites · {s.blocked_count} refused
+            by {s.blocked_domain_count ?? s.blocked_count}{' '}
+            {(s.blocked_domain_count ?? s.blocked_count) === 1 ? 'site' : 'sites'}
           </p>
         </div>
       </div>
@@ -1082,25 +1110,29 @@ function Sourcing() {
       </Panel>
 
       <div className="cons__two">
-        <Panel title="Rejected before any request" meta={`${s.rejected_count}`}>
-          <ul className="gatelist">
-            {s.rejected_before_request.map((r, i) => (
-              <li key={i}>
-                <span className="gatelist__dom mono">{r.domain}</span>
-                <span className="gatelist__why">{r.reason}</span>
-              </li>
-            ))}
-          </ul>
+        <Panel
+          title="Rejected before any request"
+          meta={`${s.rejected_domain_count ?? s.rejected_count} site${
+            (s.rejected_domain_count ?? s.rejected_count) === 1 ? '' : 's'
+          }`}
+        >
+          <GateList rows={s.rejected_domains ?? []} />
+          <p className="note cpanel__note">
+            Marketplaces and distributor sites are excluded by the brief, so these were
+            classified from the domain and never contacted.
+          </p>
         </Panel>
-        <Panel title="Admitted, then refused by the site" meta={`${s.blocked_count}`}>
-          <ul className="gatelist">
-            {s.blocked_by_site.map((r, i) => (
-              <li key={i}>
-                <span className="gatelist__dom mono">{r.domain}</span>
-                <span className="gatelist__why amber">{r.reason}</span>
-              </li>
-            ))}
-          </ul>
+        <Panel
+          title="Admitted, then refused by the site"
+          meta={`${s.blocked_domain_count ?? s.blocked_count} site${
+            (s.blocked_domain_count ?? s.blocked_count) === 1 ? '' : 's'
+          }`}
+        >
+          <GateList rows={s.blocked_domains ?? []} tone="amber" />
+          <p className="note cpanel__note">
+            These passed the gate — they are manufacturer-owned — but the server would not
+            serve the page. Nothing was inferred to fill the gap.
+          </p>
         </Panel>
       </div>
 

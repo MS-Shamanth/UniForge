@@ -1,0 +1,155 @@
+"""Self-host Inter instead of loading it from Google Fonts.
+
+WHY
+    The Google Fonts stylesheet is render-blocking and the font file follows it, which cost
+    roughly 950 ms of a 1.5 s console load while the API itself answered in 5 ms. It also
+    makes the demo dependent on a third party being reachable: a judge on a locked-down
+    network would see fallback fonts, and an offline demo would too.
+
+WHAT IT DOES
+    Fetches the woff2 files Google serves for the Inter variable font (latin and
+    latin-ext), writes them to web/public/fonts/, and emits an @font-face stylesheet.
+    Run once; the files are committed.
+
+    python tools/fetch_font.py
+"""
+from __future__ import annotations
+
+import re
+import sys
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT_DIR = ROOT / "web" / "public" / "fonts"
+CSS_OUT = ROOT / "web" / "src" / "styles" / "fonts.css"
+
+CSS_URL = (
+    "https://fonts.googleapis.com/css2?"
+    "family=Inter:wght@400;500;600;700&display=swap"
+)
+# Google serves woff2 only to browsers that ask for it.
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+
+WANTED_SUBSETS = {"latin", "latin-ext"}
+
+
+def fetch(url: str) -> bytes:
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=60) as fh:
+        return fh.read()
+
+
+def main() -> None:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    try:
+        css = fetch(CSS_URL).decode("utf-8")
+    except Exception as exc:
+        print(f"could not reach Google Fonts: {type(exc).__name__}: {exc}")
+        print("the page keeps its system-font fallback stack, so this is not fatal")
+        sys.exit(1)
+
+    # The CSS is a run of @font-face blocks, each preceded by a /* subset */ comment.
+    blocks = re.findall(
+        r"/\*\s*([\w-]+)\s*\*/\s*(@font-face\s*\{.*?\})", css, re.DOTALL)
+    if not blocks:
+        print("no @font-face blocks found; the response format changed")
+        sys.exit(1)
+
+    # Google returns one @font-face per requested weight, but for Inter every one of them
+    # points at the same variable woff2. Downloading per weight gave eight files and
+    # 533 KB for what is really two files and 133 KB. So: fetch each distinct URL once,
+    # then declare a single face per subset spanning the whole weight range.
+    by_subset: dict[str, dict] = {}
+
+    for subset, block in blocks:
+        if subset not in WANTED_SUBSETS:
+            continue
+        m_url = re.search(r"url\((https://[^)]+\.woff2)\)", block)
+        m_weight = re.search(r"font-weight:\s*([\d\s]+);", block)
+        m_range = re.search(r"unicode-range:\s*([^;]+);", block)
+        if not m_url:
+            continue
+        entry = by_subset.setdefault(subset, {
+            "urls": set(), "weights": set(),
+            "range": m_range.group(1).strip() if m_range else "",
+        })
+        entry["urls"].add(m_url.group(1))
+        for w in (m_weight.group(1).strip().split() if m_weight else ["400"]):
+            entry["weights"].add(int(w))
+
+    written: list[tuple[str, str, int]] = []
+    faces: list[str] = []
+    seen_bytes: dict[bytes, str] = {}
+
+    for subset, entry in by_subset.items():
+        weights = sorted(entry["weights"])
+        span = (f"{weights[0]} {weights[-1]}" if len(weights) > 1 else str(weights[0]))
+
+        # Fetch the distinct URLs and keep only genuinely distinct payloads.
+        name = None
+        for url in sorted(entry["urls"]):
+            data = fetch(url)
+            digest = data[:4096]
+            if digest in seen_bytes:
+                name = seen_bytes[digest]
+                continue
+            name = f"inter-{subset}.woff2"
+            (OUT_DIR / name).write_bytes(data)
+            seen_bytes[digest] = name
+            written.append((subset, span, len(data)))
+        if not name:
+            continue
+
+        faces.append(
+            "@font-face {\n"
+            "  font-family: 'Inter';\n"
+            "  font-style: normal;\n"
+            f"  font-weight: {span};\n"
+            "  font-display: swap;\n"
+            f"  src: url('/fonts/{name}') format('woff2');\n"
+            + (f"  unicode-range: {entry['range']};\n" if entry["range"] else "")
+            + "}\n"
+        )
+
+    if not faces:
+        print("nothing downloaded")
+        sys.exit(1)
+
+    # Remove per-weight files from an earlier run of this script. The pattern has to match
+    # a trailing weight and nothing else: `inter-*-*.woff2` also matches the subset name
+    # in `inter-latin-ext.woff2` and would delete a file we just wrote.
+    keep = {f"inter-{s}.woff2" for s in by_subset}
+    for stale in OUT_DIR.glob("inter-*.woff2"):
+        if stale.name in keep:
+            continue
+        if re.fullmatch(r"inter-[\w-]+-\d[\d-]*\.woff2", stale.name):
+            stale.unlink()
+            print(f"removed stale {stale.name}")
+
+    header = (
+        "/* GENERATED by tools/fetch_font.py — do not edit.\n"
+        " *\n"
+        " * Inter, self-hosted. The Google Fonts stylesheet is render-blocking and its\n"
+        " * font file follows it, which cost ~950 ms of load while the API answered in 5 ms.\n"
+        " * Serving the woff2 from our own origin removes both requests and, more usefully,\n"
+        " * removes the dependency: the demo renders correctly with no internet at all.\n"
+        " *\n"
+        " * font-display: swap keeps text visible while the file arrives, so the system\n"
+        " * fallback in globals.css is what a reader sees for the first few frames.\n"
+        " */\n\n"
+    )
+    CSS_OUT.write_text(header + "\n".join(faces), encoding="utf-8")
+
+    total = sum(n for _s, _w, n in written)
+    print(f"wrote {len(written)} font files to {OUT_DIR}  ({total:,} bytes total)")
+    for subset, weight, n in written:
+        print(f"  {subset:<10} weight {weight:<10} {n:>8,} bytes")
+    print(f"wrote {CSS_OUT}")
+    print("\nnow remove the fonts.googleapis.com <link> tags from web/index.html")
+
+
+if __name__ == "__main__":
+    main()

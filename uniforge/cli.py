@@ -96,10 +96,18 @@ def print_report(m: dict) -> None:
     h("enrichment from manufacturer documents")
     print(f"  candidates considered        {src['candidates_considered']:,}")
     print(f"  admitted (manufacturer)      {src['admitted']:,}")
-    print(f"  rejected before request      {src['rejected_count']:,}   "
-          f"{', '.join(sorted({d['domain'] for d in src['rejected_before_request']}))}")
-    print(f"  blocked by the site          {src['blocked_count']:,}   "
-          f"{', '.join(sorted({d['domain'] for d in src['blocked_by_site']}))}")
+    print(f"  rejected before request      "
+          f"{src.get('rejected_domain_count', src['rejected_count']):,} sites")
+    for d in src.get("rejected_domains", []):
+        extra = (f"  ({d['parts_affected']} parts)"
+                 if d["parts_affected"] > 1 else "")
+        print(f"      {d['domain']:<22} {d['reason']}{extra}")
+    print(f"  blocked by the site          "
+          f"{src.get('blocked_domain_count', src['blocked_count']):,} sites")
+    for d in src.get("blocked_domains", []):
+        extra = (f"  ({d['parts_affected']} parts)"
+                 if d["parts_affected"] > 1 else "")
+        print(f"      {d['domain']:<22} {d['reason']}{extra}")
     print(f"  rows enriched                {src['rows_enriched']:,}")
     print(f"  attributes each              {src['attributes_before_mean']} -> "
           f"{src['attributes_after_mean']}  (x{src['attribute_multiple']})")
@@ -267,12 +275,14 @@ def cmd_source(args: argparse.Namespace) -> int:
     print(f"  admitted                     {d['admitted']}")
     print()
     print("  rejected BEFORE any request was made:")
-    for r in d["rejected_before_request"]:
-        print(f"    {r['domain']:<22} {r['reason']}")
+    for r in d.get("rejected_domains", []):
+        extra = f"  ({r['parts_affected']} parts)" if r["parts_affected"] > 1 else ""
+        print(f"    {r['domain']:<22} {r['reason']}{extra}")
     print()
     print("  admitted but refused by the site:")
-    for r in d["blocked_by_site"]:
-        print(f"    {r['domain']:<22} {r['reason']}")
+    for r in d.get("blocked_domains", []):
+        extra = f"  ({r['parts_affected']} parts)" if r["parts_affected"] > 1 else ""
+        print(f"    {r['domain']:<22} {r['reason']}{extra}")
     print()
     print(f"  discarded because the page did not name the part: "
           f"{d['discarded_because_page_did_not_name_the_part']}")

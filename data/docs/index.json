@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-23T13:15:10+00:00",
+  "generated_at": "2026-08-25T06:18:23+00:00",
   "reconstructed": true,
   "note": "Reconstructed manufacturer-page fixtures. Replace with genuine caches via `uniforge source --fetch --discover`; the index format is identical and the reconstructed flag clears itself.",
   "candidates_considered": 63,
@@ -65,7 +65,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-0013",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1605,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -77,7 +77,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-0030",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1605,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -89,7 +89,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-4505",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1613,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -101,7 +101,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100075678/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1399,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -113,7 +113,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100045865/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1399,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -125,7 +125,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100048736/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1396,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -137,7 +137,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100075690/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1399,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -149,7 +149,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100075692/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1399,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -161,7 +161,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100145365/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1399,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -173,7 +173,7 @@
       "url": "https://www.kohler.com/en/products/k-596-vs",
       "domain": "kohler.com",
       "brand": "KOHLER",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1057,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -185,7 +185,7 @@
       "url": "https://www.deltafaucet.com/products/dl6550-pc",
       "domain": "deltafaucet.com",
       "brand": "Delta",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 987,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -197,7 +197,7 @@
       "url": "https://www.charlottepipe.com/products/pvc046927",
       "domain": "charlottepipe.com",
       "brand": "Charlotte Pipe",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 872,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -209,7 +209,7 @@
       "url": "https://www.trex.com/products/decking/trx53347",
       "domain": "trex.com",
       "brand": "Trex",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 912,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -221,7 +221,7 @@
       "url": "https://www.nortonabrasives.com/en-us/products/nor-424884",
       "domain": "nortonabrasives.com",
       "brand": "Norton",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 929,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -233,7 +233,7 @@
       "url": "https://www.grip-rite.com/products/gr328782",
       "domain": "grip-rite.com",
       "brand": "Grip-Rite",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 915,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -245,7 +245,7 @@
       "url": "https://www.henkel-adhesives.com/us/en/product/loc410114.html",
       "domain": "henkel-adhesives.com",
       "brand": "LOCTITE",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1034,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -257,7 +257,7 @@
       "url": "https://www.azekexteriors.com/products/decking/azvin2673",
       "domain": "azekexteriors.com",
       "brand": "AZEK",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1419,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -269,7 +269,7 @@
       "url": "https://www.diablotools.com/products/d3123x",
       "domain": "diablotools.com",
       "brand": "Diablo",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 933,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -281,7 +281,7 @@
       "url": "https://www.leviton.com/en/products/t4243-w",
       "domain": "leviton.com",
       "brand": "Leviton",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 921,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -293,7 +293,7 @@
       "url": "https://www.henkel-adhesives.com/us/en/product/loc804937.html",
       "domain": "henkel-adhesives.com",
       "brand": "LOCTITE",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1028,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -305,7 +305,7 @@
       "url": "https://www.apollovalves.com/products/70lf-1957",
       "domain": "apollovalves.com",
       "brand": "Apollo",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1029,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -317,7 +317,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-6729",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1605,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -329,7 +329,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-4272",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1382,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -341,7 +341,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-8806",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1382,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -353,7 +353,7 @@
       "url": "https://www.moen.com/products/9089ch",
       "domain": "moen.com",
       "brand": "Moen",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1176,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -365,7 +365,7 @@
       "url": "https://www.deltafaucet.com/products/dl4999-ss",
       "domain": "deltafaucet.com",
       "brand": "Delta",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 990,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -377,7 +377,7 @@
       "url": "https://www.grip-rite.com/products/gr877645",
       "domain": "grip-rite.com",
       "brand": "Grip-Rite",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 895,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -389,7 +389,7 @@
       "url": "https://www.leviton.com/en/products/t5889-w",
       "domain": "leviton.com",
       "brand": "Leviton",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 921,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -401,7 +401,7 @@
       "url": "https://www.carrier.com/residential/en/us/products/24abc6491",
       "domain": "carrier.com",
       "brand": "Carrier",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 837,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -413,7 +413,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100199308/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1091,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -425,7 +425,7 @@
       "url": "https://www.nibco.com/products/n662400",
       "domain": "nibco.com",
       "brand": "NIBCO",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 960,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -437,7 +437,7 @@
       "url": "https://www.diablotools.com/products/d5359x",
       "domain": "diablotools.com",
       "brand": "Diablo",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 933,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -449,7 +449,7 @@
       "url": "https://www.rheem.com/products/residential/xe15m21h72",
       "domain": "rheem.com",
       "brand": "Rheem",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1097,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -461,7 +461,7 @@
       "url": "https://www.azekexteriors.com/products/decking/azhar1905",
       "domain": "azekexteriors.com",
       "brand": "AZEK",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1430,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -473,7 +473,7 @@
       "url": "https://www.apollovalves.com/products/70lf-3150",
       "domain": "apollovalves.com",
       "brand": "Apollo",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1029,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -485,7 +485,7 @@
       "url": "https://www.charlottepipe.com/products/pvc045386",
       "domain": "charlottepipe.com",
       "brand": "Charlotte Pipe",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 868,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -497,7 +497,7 @@
       "url": "https://www.nibco.com/products/n561384",
       "domain": "nibco.com",
       "brand": "NIBCO",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 956,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -509,7 +509,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-9285",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1605,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -521,7 +521,7 @@
       "url": "https://www.azekexteriors.com/products/decking/azvin9375",
       "domain": "azekexteriors.com",
       "brand": "AZEK",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1418,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -533,7 +533,7 @@
       "url": "https://www.nibco.com/products/n653868",
       "domain": "nibco.com",
       "brand": "NIBCO",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 964,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -545,7 +545,7 @@
       "url": "https://www.charlottepipe.com/products/pvc025375",
       "domain": "charlottepipe.com",
       "brand": "Charlotte Pipe",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 876,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -557,7 +557,7 @@
       "url": "https://www.azekexteriors.com/products/decking/azlan9127",
       "domain": "azekexteriors.com",
       "brand": "AZEK",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1421,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -569,7 +569,7 @@
       "url": "https://www.azekexteriors.com/products/decking/azhar4621",
       "domain": "azekexteriors.com",
       "brand": "AZEK",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1434,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -581,7 +581,7 @@
       "url": "https://www.nortonabrasives.com/en-us/products/nor-654658",
       "domain": "nortonabrasives.com",
       "brand": "Norton",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 935,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -593,7 +593,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100128453/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1091,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -605,7 +605,7 @@
       "url": "https://www.azekexteriors.com/products/decking/azhar3074",
       "domain": "azekexteriors.com",
       "brand": "AZEK",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1418,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -617,7 +617,7 @@
       "url": "https://www.rheem.com/products/residential/xe71m72h21",
       "domain": "rheem.com",
       "brand": "Rheem",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1097,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -629,7 +629,7 @@
       "url": "https://www.moen.com/products/3883srs",
       "domain": "moen.com",
       "brand": "Moen",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1210,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -641,7 +641,7 @@
       "url": "https://www.rheem.com/products/residential/xe69m96h48",
       "domain": "rheem.com",
       "brand": "Rheem",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1097,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -653,7 +653,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Hole-Dozer/49-56-8872",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 875,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -665,7 +665,7 @@
       "url": "https://www.trex.com/products/decking/trx20894",
       "domain": "trex.com",
       "brand": "Trex",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 903,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -677,7 +677,7 @@
       "url": "https://www.3m.com/3M/en_US/p/d/3mabr-7100129749/",
       "domain": "3m.com",
       "brand": "3M",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1091,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -689,7 +689,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Hole-Dozer/49-56-6937",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 879,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -701,7 +701,7 @@
       "url": "https://www.carrier.com/residential/en/us/products/24abc6590",
       "domain": "carrier.com",
       "brand": "Carrier",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 837,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -713,7 +713,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Hole-Dozer/49-56-5270",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 871,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
@@ -725,7 +725,7 @@
       "url": "https://www.milwaukeetool.com/Products/Accessories/Grinding-and-Cutting/49-94-8527",
       "domain": "milwaukeetool.com",
       "brand": "Milwaukee",
-      "retrieved_at": "2026-08-23T13:15:10+00:00",
+      "retrieved_at": "2026-08-25T06:18:23+00:00",
       "char_length": 1382,
       "reconstructed": true,
       "verdict": "admitted - manufacturer-owned domain"
