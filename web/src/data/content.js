@@ -5,7 +5,8 @@
  * place to check a number against data/out/metrics.json.
  */
 
-export const GITHUB_URL = 'https://github.com/'
+/** Every GitHub button on the site reads this, so there is one place to change it. */
+export const GITHUB_URL = 'https://github.com/MS-Shamanth/UniForge'
 
 export const NAV_LINKS = [
   { label: 'Product', href: '#product' },

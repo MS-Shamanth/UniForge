@@ -73,6 +73,16 @@ check("no email address in the bundle", not emails, ", ".join(emails[:3]))
 
 check("no lorem ipsum", "lorem ipsum" not in bundle.lower())
 
+# Every GitHub button reads one constant, so one assertion covers all of them. A bare
+# "https://github.com/" would render as a dead button on a submitted page.
+REPO = "https://github.com/MS-Shamanth/UniForge"
+check("GitHub buttons point at the repository", REPO in bundle, REPO)
+check("no placeholder github.com/ link",
+      '"https://github.com/"' not in bundle and "'https://github.com/'" not in bundle)
+check("the console route is reachable from the page", "/console" in bundle)
+check("tagline is present in the closing section",
+      bundle.count("Rules decide") >= 1)
+
 # colour discipline: the brief bans blue and green
 banned = [c for c in ("#3b82f6", "#2563eb", "#10b981", "#22c55e", "#0ea5e9")
           if c in sheet.lower()]

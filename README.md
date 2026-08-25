@@ -40,9 +40,15 @@ npm run dev                           # http://localhost:5173
 ```
 
 `/` is the landing page. `/console` is the working prototype: it reads a live run, so
-nothing it shows is typed in by hand.
+nothing it shows is typed in by hand. The server compiles once at startup in the
+background, so the console opens immediately rather than making the first visitor wait for
+the pipeline.
 
-Deployment, including the `Could not import module "app"` fix: **[DEPLOY.md](DEPLOY.md)**.
+| | |
+|---|---|
+| Deployment, and the `Could not import module "app"` fix | **[DEPLOY.md](DEPLOY.md)** |
+| Prototype deck content, slide by slide | **[docs/prototype-deck.md](docs/prototype-deck.md)** |
+| Solution brief and the submission checklist | **[docs/submission-brief.md](docs/submission-brief.md)** |
 
 ---
 
@@ -150,10 +156,34 @@ The round trip needs **no ground truth**: it re-parses UniForge's own output and
 locator for every number and value. That is why it works on the full catalogue and not only
 on the rows where a labelled answer exists.
 
+One of those checks exists because of a bug worth naming. To speed up the workbook export,
+xlsxwriter's `constant_memory` mode was enabled; it halved the time and silently discarded
+about 46,000 of 47,197 populated cells, while still producing 1,000 rows under 252
+correctly ordered headers. A truncated export that opens cleanly is worse than a slow one,
+so the option is gone and the workbook is now read back and its cells counted.
+
 ```bash
-python tools/smoke_api.py     # 27 assertions against a running server
-python tools/smoke_web.py     # the built page, plus the brief's content rules
-python tools/diagnose.py all   # why any record is in review
+# with the server running
+python tools/verify_all.py         # every suite below, summarised
+python tools/smoke_api.py          # API assertions
+python tools/smoke_web.py          # the built page, plus the brief's content rules
+python tools/audit_console.py      # every call the console makes, with timings
+python tools/time_warmup.py        # how long until the console can open
+
+# standalone
+python tools/verify_xlsx.py        # read the workbook back and count the cells
+python tools/diagnose.py all       # why any record is in review
+python tools/profile_run.py        # where a compile spends its time
+```
+
+Front-end checks need Playwright, which is deliberately not a dependency — it downloads a
+browser and would slow every install for something only used when auditing the page:
+
+```bash
+cd web
+npm i -D playwright@1.49.1 && npx playwright install chromium
+node shoot.mjs        # renders at 3 viewports: overflow, stuck reveals, console errors
+node diagnose.mjs     # separates a real reveal bug from an element still settling
 ```
 
 ---
@@ -178,7 +208,12 @@ uniforge/            the compiler
 
 server/app.py        FastAPI over the compiler
 web/                 React + Vite: landing page and live console
-tools/               dataset and document builders, smoke tests, diagnostics
+  src/components/    the landing page, one file per section
+  src/console/       the prototype console, which reads a live run
+  src/data/          copy, and the figures with their provenance
+  dist/              committed build output, so the deploy needs no Node
+tools/               dataset and document builders, verification, diagnostics
+docs/                deck content and the solution brief
 data/in/             input catalogue
 data/docs/           cached manufacturer documents, committed so citations resolve
 data/out/            generated: delivery file, metrics, evidence, review queue

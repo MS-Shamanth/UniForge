@@ -15,7 +15,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "4.3.4",
-    "playwright": "^1.49.1",
     "vite": "5.4.11"
+  },
+  "comments": {
+    "playwright": "The QA scripts (shoot.mjs, diagnose.mjs, shotsection.mjs) need Playwright, which is deliberately NOT a dependency here: it pulls a browser download and would slow every install, including the Docker build, for something only used when auditing the page. Install it on demand: npm i -D playwright@1.49.1 && npx playwright install chromium"
   }
 }
